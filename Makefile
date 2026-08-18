@@ -12,3 +12,6 @@ build:
 
 render-start:
 	uv run gunicorn task_manager.wsgi
+
+tailwind-build:
+	uv run python manage.py tailwind build

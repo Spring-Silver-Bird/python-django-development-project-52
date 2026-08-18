@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+db.sqlite3
+node_modules/
+staticfiles/
+.venv/
+.idea/
+.django_tailwind_cli/
+assets/css/tailwind.css
