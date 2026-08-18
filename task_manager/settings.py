@@ -126,7 +126,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / "assets"]
-TAILWIND_CLI_SRC_CSS = "assets/css/tailwind.source.css"
+TAILWIND_CLI_SRC_CSS = "tailwind/tailwind.css"
 
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
