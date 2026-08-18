@@ -8,5 +8,5 @@ dependencies = [
     "django>=6.1",
     "django-tailwind-cli>=4.7.0",
     "gunicorn>=26.1.0",
-    "tailwindcss>=0.0.1",
+    "whitenoise>=6.12.0",
 ]
