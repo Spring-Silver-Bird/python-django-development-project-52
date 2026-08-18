@@ -2,10 +2,10 @@ install:
 	uv sync
 
 migrate:
-	uv run django-admin migrate
+	uv run python manage.py migrate
 
 collectstatic:
-	uv run django-admin collectstatic --noinput
+	uv run python manage.py collectstatic --noinput
 
 build:
 	./build.sh
