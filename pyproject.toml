@@ -9,4 +9,12 @@ dependencies = [
     "django-tailwind-cli>=4.7.0",
     "gunicorn>=26.1.0",
     "whitenoise>=6.12.0",
+    "rollbar>=0.16.0",
+    "pytest>=9.0.2",
+    "pytest-django>=4.12.0",
+    "django-widget-tweaks>=1.5.1",
 ]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "task_manager.settings"
+pythonpath = ["."]

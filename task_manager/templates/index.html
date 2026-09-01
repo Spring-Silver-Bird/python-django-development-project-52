@@ -1,42 +1,22 @@
-<!DOCTYPE html>
-{% load tailwind_cli %}
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Менеджер задач</title>
-    {% tailwind_css %}
-</head>
+{% extends 'base.html' %}
 
-<body class="min-h-screen flex flex-col bg-white text-gray-800 font-sans">
-    <header class="bg-gray-50 border-b border-gray-200 px-8 py-3 flex justify-between items-center">
-        <div class="flex items-center space-x-6">
-            <a href="#" class="font-bold text-gray-900">Менеджер задач</a>
-            <a href="#" class="text-gray-600 hover:text-gray-900">Пользователи</a>
-        </div>
-        <div class="flex items-center space-x-6">
-          <a href="#" class="text-gray-600 hover:text-gray-900">Вход</a>
-          <a href="#" class="text-gray-600 hover:text-gray-900">Регистрация</a>
-        </div>
-    </header>
+    {% block title %}Менеджер задач{% endblock %}
 
-    <main class="flex-grow container mx-auto px-4 py-8 max-w-5xl">
+
+{% block content %}
         <div class="bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
           <h1 class="text-3xl font-normal text-gray-900 mb-2">Привет от Хекслета!</h1>
-          <p class="text-gray-600 mb-6">Практические курсы по программированию</p>
+          <p class="text-gray-600 mb-6">Тут мы создаем менеджер задач. Надеюсь вам будет интересно!</p>
 
           <hr class="border-t border-gray-200 mb-6">
 
-          <button class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded transition-colors shadow-sm">
-            Узнать больше
-          </button>
         </div>
-      </main>
+{% endblock %}
 
-    <footer class="container mx-auto px-4 max-w-5xl border-t border-gray-200 py-4 text-sm text-gray-600">
+
+
+    {% block footer %}
         Улыбайся чаще!
-    </footer>
+    {% endblock %}
 
 
-</body>
-</html>

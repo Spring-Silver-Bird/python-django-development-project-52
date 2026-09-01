@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Изменить пользователя" %}{% endblock %}
+
+{% block content %}
+    <div class="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg p-8 shadow-sm">
+        <h2 class="text-3xl font-bold mb-6">Изменить {{ object.username }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="id_first_name">Имя</label>
+            {{ form.first_name }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_last_name">Фамилия</label>
+            {{ form.last_name }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_username">Имя пользователя</label>
+            {{ form.username }}
+        </div>
+
+        <button type="submit" class="text-gray-600 hover:text-gray-900 bg-transparent border-0 p-0">Изменить</button>
+        <a href="{% url 'users:list' %}" class="text-gray-600 hover:text-gray-900 bg-transparent border-0 p-0">Отмена</a>
+    </form>
+</div>
+{% endblock %}

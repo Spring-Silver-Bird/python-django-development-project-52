@@ -1,5 +1,5 @@
 install:
-	uv sync
+	uv sync --dev
 
 migrate:
 	uv run python manage.py migrate
@@ -15,3 +15,6 @@ render-start:
 
 tailwind-build:
 	uv run python manage.py tailwind build
+
+tests:
+	uv run manage.py test
