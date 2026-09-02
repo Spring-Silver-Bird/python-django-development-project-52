@@ -17,4 +17,4 @@ tailwind-build:
 	uv run python manage.py tailwind build
 
 tests:
-	uv run manage.py test
+	uv run pytest
