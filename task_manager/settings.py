@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
     'task_manager',
+    'task_manager.users',
+    'task_manager.statuses',
     "django_tailwind_cli",
     'widget_tweaks',
 
