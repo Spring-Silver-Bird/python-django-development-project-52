@@ -1,13 +1,11 @@
 # task_manager/users/views.py
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
-from django.views.generic.base import TemplateView
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from .forms import RegisterForm, UpdateForm
 

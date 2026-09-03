@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
     {% block title %}Менеджер задач{% endblock %}
 
@@ -12,6 +13,12 @@
 
         </div>
 {% endblock %}
+
+    {% block picture %}
+            <div class="hero-image flex justify-end mt-8">
+                <img src="{% static 'images/main.png' %}" alt="Стикер" width="240" class="w-60 h-auto">
+            </div>
+    {% endblock %}
 
 
 
