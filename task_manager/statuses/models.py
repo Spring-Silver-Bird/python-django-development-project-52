@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
+
 class Status(models.Model):
     name = models.CharField(
         max_length=150, unique=True, verbose_name=_('Имя')
@@ -13,7 +14,6 @@ class Status(models.Model):
         verbose_name=_('дата создания'),
         auto_now_add=True,
     )
-#    status = ForeignKey(Status, on_delete=models.PROTECT, related_name='tasks')
 
     class Meta:
         verbose_name = _('Статус')

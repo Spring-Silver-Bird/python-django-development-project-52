@@ -41,9 +41,24 @@ class UserUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
 class UserDeleteView(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
     model = User
     template_name = 'users/delete.html'
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.authored_tasks.exists() or self.object.executed_tasks.exists():
+            messages.error(request, 'Невозможно удалить пользователя, так как у него остались задачи')
+            return redirect('users:list')
+        try:
+            return super().post(request, *args, **kwargs)
+        except ProtectedError:
+            messages.error(request, 'Невозможно удалить пользователя, так как у него остались задачи')
+            return redirect('users:list')
+
     success_url = reverse_lazy('users:list')
     success_message = 'Пользователь успешно удален'
-    def test_func(self): return self.request.user.pk == self.kwargs['pk']
+
+    def test_func(self):
+        return self.request.user.pk == self.kwargs['pk']
+
     def handle_no_permission(self):
         messages.error(self.request, 'У вас нет прав для изменения')
         return redirect('users:list')
