@@ -14,22 +14,21 @@
         {% csrf_token %}
 
         <div class="mb-3">
-            <label for="id_first_name">Имя</label>
+            <label for="id_first_name" class="block text-sm font-medium mb-1">Имя:</label>
             {{ form.first_name }}
         </div>
 
         <div class="mb-3">
-            <label for="id_last_name">Фамилия</label>
+            <label for="id_last_name" class="block text-sm font-medium mb-1">Фамилия:</label>
             {{ form.last_name }}
         </div>
 
         <div class="mb-3">
-            <label for="id_username">Имя пользователя</label>
+            <label for="id_username" class="block text-sm font-medium mb-1">Имя пользователя:</label>
             {{ form.username }}
         </div>
-
-        <button type="submit" class="text-gray-600 hover:text-gray-900 bg-transparent border-0 p-0">Изменить</button>
-        <a href="{% url 'users:list' %}" class="text-gray-600 hover:text-gray-900 bg-transparent border-0 p-0">Отмена</a>
+        <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow">Изменить</button>
+        <a href="{% url 'users:list' %}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md border inline-block text-center ml-2">Отмена</a>
     </form>
 </div>
 {% endblock %}
@@ -40,7 +39,7 @@
     </div>
 {% endblock %}
 
-    {% block footer %}
-        Wisdom comes from experience. Experience is often a result of lack of wisdom.
-        @Terry Pratchett
-    {% endblock %}
+{% block footer %}
+    Wisdom comes from experience. Experience is often a result of lack of wisdom.
+    @Terry Pratchett
+{% endblock %}

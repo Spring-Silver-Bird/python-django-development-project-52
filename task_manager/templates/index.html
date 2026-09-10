@@ -14,16 +14,17 @@
         </div>
 {% endblock %}
 
-    {% block picture %}
-            <div class="hero-image flex justify-end mt-auto pt-12">
-                <img src="{% static 'images/main.png' %}" alt="Witch" width="400" class="w-60 h-auto">
-            </div>
-    {% endblock %}
+{% block picture %}
+    <div class="hero-image flex justify-end mt-auto pt-12">
+        <img src="{% static 'images/index.png' %}" alt="Witch" width="400" class="w-60 h-auto">
+    </div>
+{% endblock %}
 
-
-
+<footer class="container mx-auto px-4 max-w-5xl border-t border-gray-200 py-4 text-sm text-gray-600">
     {% block footer %}
-        Улыбайся чаще!
+    In ancient times cats were worshipped as gods; they have not forgotten this.
+    @Terry Pratchett
     {% endblock %}
+</footer>
 
 
