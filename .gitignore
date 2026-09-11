@@ -8,3 +8,7 @@ staticfiles/
 .idea/
 .django_tailwind_cli/
 assets/css/tailwind.css
+task_manager/__pycache__
+*.Zone.Identifier
+tmp_*.py
+.pytest_cache/
