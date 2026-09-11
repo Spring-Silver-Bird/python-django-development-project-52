@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
 
 
 class Task(models.Model):
@@ -16,7 +17,7 @@ class Task(models.Model):
         blank=True
     )
     status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='tasks')
-#    label = models.ManyToManyField(Labels, on_delete=models.PROTECT, related_name='labels ')
+    label = models.ManyToManyField(Label, blank=True, related_name='tasks', verbose_name='Метки')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='authored_tasks')
     executor = models.ForeignKey(
       settings.AUTH_USER_MODEL,

@@ -32,6 +32,11 @@
             {% if form.executor.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.executor.errors|striptags }}</p>{% endif %}
             {% render_field form.executor class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
         </div>
+        <div class="mb-4">
+            <label for="{{ form.lable.id_for_label }}" multiple="multiple" size="5" class="block text-sm mb-1">Метки:</label>
+            {% if form.lable.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.lable.errors|striptags }}</p>{% endif %}
+            {% render_field form.label class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+        </div>
 
 
         <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow">Изменить</button>

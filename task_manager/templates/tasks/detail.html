@@ -7,7 +7,7 @@
 {% block content %}
 <h1 class="text-2xl font-bold mb-6">Просмотр задачи</h1>
 <div class="border border-gray-200 rounded">
-    <div class="bg-slate-600 text-white px-4 py-3 font-semibold">{{ object.name }}</div>
+    <div class="bg-slate-600 bg-gray-500 text-white px-4 py-3 font-semibold">{{ object.name }}</div>
     <div class="bg-gray-50 p-4">
         <p class="text-sm mb-4">{{ task.description }}</p>
         <hr class="border-gray-200 mb-4">
@@ -16,7 +16,15 @@
             <div class="font-medium">Исполнитель</div><div>{{ task.executor.get_full_name|default:object.executor.username }}</div>
             <div class="font-medium">Статус</div><div>{{ object.status.name }}</div>
             <div class="font-medium">Дата создания</div><div>{{ object.created_at|date:"d.m.Y H:i" }}</div>
-
+            <div class="font-medium">Метки:</div>
+            <div>{% if task.labels.all %}
+                <ul class="list-disc ml-5">
+                    {% for l in task.labels.all %}
+                        <li>{{ l.name }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}—{% endif %}
+            </div>
         </div>
         <div class="mt-4 space-x-3 text-sm">
             <a href="{% url 'tasks:update' task.pk %}" class="text-blue-600 hover:underline">Изменить</a>
