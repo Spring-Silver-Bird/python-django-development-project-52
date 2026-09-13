@@ -16,8 +16,8 @@ class Task(models.Model):
         verbose_name=_('Описание'),
         blank=True
     )
-    status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name='tasks')
-    label = models.ManyToManyField(Label, blank=True, related_name='tasks', verbose_name='Метки')
+    status = models.ForeignKey(Status, on_delete=models.PROTECT, related_name="task_set")
+    labels = models.ManyToManyField(Label, blank=True, related_name='tasks', verbose_name='Метки')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='authored_tasks')
     executor = models.ForeignKey(
       settings.AUTH_USER_MODEL,

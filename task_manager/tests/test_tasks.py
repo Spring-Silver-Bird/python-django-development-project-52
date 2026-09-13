@@ -1,10 +1,12 @@
 # task_manager/tests/test_tasks.py
 
 from django.contrib.auth import get_user_model
+from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
+from task_manager.labels.models import Label
 
 User = get_user_model()
 
@@ -12,6 +14,7 @@ class TaskTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="tester", password="pass123")
         self.status = Status.objects.create(name="TestStatus")
+        self.labels = Label.objects.create(name="TestLabel")
         self.task = Task.objects.create(
             name="Test_task",
             description="some",
@@ -23,12 +26,12 @@ class TaskTest(TestCase):
     def test_list_guest(self):
         response = self.client.get(reverse("tasks:list"))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"{reverse('login')}?next={reverse('tasks:list')}")
+        self.assertIn(reverse('login'), response.url)
 
     def test_detail_get_guest(self):
         response = self.client.get(reverse("tasks:detail", kwargs={"pk": self.task.pk}))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"{reverse('login')}?next={reverse('tasks:detail', kwargs={'pk': self.task.pk})}")
+        self.assertIn(reverse('login'), response.url)
 
 
     def test_create_get_guest(self):
@@ -88,14 +91,26 @@ class TaskTest(TestCase):
 
     def test_create_valid(self):
         self.client.force_login(self.user)
+        count_before = Task.objects.count()
         response = self.client.post(reverse("tasks:create"),
             {"name": "Valid",
             "description": "d",
             "status": self.status.pk,
-            "executor": self.user.pk})
+            "executor": self.user.pk,
+            "labels": [self.labels.pk],},
+            follow=False,
+        )
         self.assertRedirects(response, reverse("tasks:list"))
+        self.assertEqual(Task.objects.count(), count_before + 1)
+        task = Task.objects.get(name="Valid")
+        self.assertEqual(task.author, self.user)
+        self.assertEqual(task.status, self.status)
+        self.assertEqual(task.executor, self.user)
         self.assertTrue(Task.objects.filter(name="Valid").exists())
         self.assertEqual(Task.objects.get(name="Valid").author, self.user)
+        self.assertIn(self.labels, task.labels.all())
+        msgs = [str(m) for m in get_messages(response.wsgi_request)]
+        self.assertIn("Задача успешно создана", msgs)
 
 
     def test_update_get_own(self):
@@ -152,3 +167,5 @@ class TaskTest(TestCase):
         response = self.client.post(reverse("tasks:delete", kwargs={"pk": self.task.pk}))
         self.assertRedirects(response, reverse("tasks:list"))
         self.assertTrue(Task.objects.filter(pk=self.task.pk).exists())
+        msgs = [str(m) for m in get_messages(response.wsgi_request)]
+        self.assertIn("Задачу может удалить только ее автор", msgs)

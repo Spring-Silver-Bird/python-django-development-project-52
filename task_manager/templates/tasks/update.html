@@ -33,9 +33,9 @@
             {% render_field form.executor class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
         </div>
         <div class="mb-4">
-            <label for="{{ form.lable.id_for_label }}" multiple="multiple" size="5" class="block text-sm mb-1">Метки:</label>
-            {% if form.lable.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.lable.errors|striptags }}</p>{% endif %}
-            {% render_field form.label class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
+            <label for="{{ form.labels.id_for_label }}" class="block text-sm mb-1">Метки:</label>
+            {% if form.labels.errors %}<p class="text-sm text-red-600 -mt-1 mb-1">{{ form.labels.errors|striptags }}</p>{% endif %}
+            {% render_field form.labels multiple="multiple" size="5" class="block w-full max-w-md px-2 py-1.5 border border-gray-400 rounded-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500" %}
         </div>
 
 
@@ -50,3 +50,10 @@
         <img src="{% static 'images/task_update.png' %}" alt="Стикер" width="300" class="w-60 h-auto">
     </div>
 {% endblock %}
+
+<footer class="container mx-auto px-4 max-w-5xl border-t border-gray-200 py-4 text-sm text-gray-600">
+    {% block footer %}
+    Wisdom comes from experience. Experience is often a result of lack of wisdom.
+    @Terry Pratchett
+    {% endblock %}
+</footer>

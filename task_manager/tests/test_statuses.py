@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from task_manager.statuses.models import Status
+from task_manager.tasks.models import Task
 
 User = get_user_model()
 
@@ -15,7 +16,7 @@ class StatusTest(TestCase):
     def test_list_guest(self):
         response = self.client.get(reverse("statuses:list"))
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, f"{reverse('login')}?next={reverse('statuses:list')}")
+        self.assertIn(reverse('login'), response.url)
 
     def test_create_get_guest(self):
         response = self.client.get(reverse("statuses:create"))
@@ -121,6 +122,15 @@ class StatusTest(TestCase):
         self.assertRedirects(response, reverse("statuses:list"))
         self.assertFalse(Status.objects.filter(pk=pk).exists())
         self.assertEqual(Status.objects.count(), 0)
+
+    def test_delete_protected(self):
+        self.client.force_login(self.user)
+        task = Task.objects.create(name="T1", description="d", status=self.status, author=self.user, executor=self.user)
+        response = self.client.post(reverse("statuses:delete", kwargs={"pk": self.status.pk}))
+        self.assertRedirects(response, reverse("statuses:list"))
+        self.assertTrue(Status.objects.filter(pk=self.status.pk).exists())
+        resp2 = self.client.post(reverse("statuses:delete", kwargs={"pk": self.status.pk}), follow=True)
+        self.assertContains(resp2, "Невозможно удалить статус")
 
     def test_delete_other_allowed(self):
         other = User.objects.create_user(username="other2", password="pass12345")

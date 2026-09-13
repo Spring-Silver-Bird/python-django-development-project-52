@@ -1,9 +1,10 @@
 # task_manager/users/views.py
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import ProtectedError
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -25,7 +26,7 @@ class UserCreateView(SuccessMessageMixin, CreateView):
     success_url=reverse_lazy('login')
     success_message = 'Пользователь успешно зарегистрирован'
 
-class UserUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
+class UserUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
     form_class = UpdateForm
     template_name = 'users/update.html'
@@ -38,7 +39,7 @@ class UserUpdateView(SuccessMessageMixin, UserPassesTestMixin, UpdateView):
         messages.error(self.request, 'У вас нет прав для изменения')
         return redirect('users:list')
 
-class UserDeleteView(SuccessMessageMixin, UserPassesTestMixin, DeleteView):
+class UserDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = User
     template_name = 'users/delete.html'
 
