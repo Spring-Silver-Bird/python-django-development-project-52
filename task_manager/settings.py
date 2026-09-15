@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     "whitenoise.runserver_nostatic",
     'django.contrib.staticfiles',
+    'django_filters',
     'task_manager',
     'task_manager.users',
     'task_manager.statuses',

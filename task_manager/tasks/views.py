@@ -9,6 +9,8 @@ from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
 from django.db.models import ProtectedError
+
+from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.models import Task
 
 
@@ -17,6 +19,14 @@ class TaskListView(LoginRequiredMixin, ListView):
     model = Task
     template_name = 'tasks/list.html'
     context_object_name = 'tasks'
+
+    def get_queryset(self):
+        return TaskFilter(self.request.GET, queryset=Task.objects.all(), request=self.request).qs
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['filter'] = TaskFilter(self.request.GET, queryset=Task.objects.all(), request=self.request)
+        return ctx
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task

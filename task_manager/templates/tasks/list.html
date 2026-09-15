@@ -2,6 +2,7 @@
 
 {% extends 'base.html' %}
 {% load static %}
+{% load widget_tweaks %}
 
 
 {% block title %}Список задач{% endblock %}
@@ -9,7 +10,29 @@
 {% block content %}
 <div class="px-4 py-8">
     <h1 class="text-3xl font-bold mb-6">Задачи</h1>
-    
+    <a href="{% url 'tasks:create' %}" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded">Создать задачу</a>
+    <form method="get" class="bg-gray-50 border border-gray-200 rounded p-4 mb-6">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3 mb-3">
+            <div class="flex items-center gap-2">
+                <label class="text-sm">Статус:</label>
+                {% render_field filter.form.status class="px-2 py-1.5 border border-gray-400 rounded-sm bg-white text-sm min-w-52" %}
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="text-sm">Исполнитель:</label>
+                {% render_field filter.form.executor class="px-2 py-1.5 border border-gray-400 rounded-sm bg-white text-sm min-w-52" %}
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div class="flex items-center gap-2">
+                <label class="text-sm">Метка:</label>
+                {% render_field filter.form.labels class="px-2 py-1.5 border border-gray-400 rounded-sm bg-white text-sm min-w-52" %}
+            </div>
+            <label class="flex items-center gap-1 text-sm">
+                {% render_field filter.form.self_tasks class="w-4 h-4" %} Только свои задачи:
+            </label>
+            <button type="submit" class="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded">Показать</button>
+        </div>
+    </form>
     <div class="overflow-x-auto">
         <table class="min-w-full text-left text-sm border-collapse">
             <thead class="table-dark">
@@ -54,7 +77,7 @@
         </table>
     </div>
     
-    <a href="{% url 'tasks:create' %}" class="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded">Создать задачу</a>
+
 </div>
 {% endblock %}
 
@@ -64,9 +87,3 @@
     </div>
 {% endblock %}
 
-<footer class="container mx-auto px-4 max-w-5xl border-t border-gray-200 py-4 text-sm text-gray-600">
-    {% block footer %}
-    If you have enough book space, I don't want to talk to you.
-    @Terry Pratchett
-    {% endblock %}
-</footer>
