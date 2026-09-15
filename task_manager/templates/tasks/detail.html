@@ -12,8 +12,8 @@
         <p class="text-sm mb-4">{{ task.description }}</p>
         <hr class="border-gray-200 mb-4">
         <div class="grid grid-cols-2 gap-y-2 text-sm">
-            <div class="font-medium">Автор</div><div>{{ task.author.get_full_name|default:task.author.username }}</div>
-            <div class="font-medium">Исполнитель</div><div>{{ task.executor.get_full_name|default:task.executor.username }}</div>
+            <div class="font-medium">Автор</div><div>{% if task.author %}{{ task.author.get_full_name|default:task.author.username }}{% else %}—{% endif %}</div>
+            <div class="font-medium">Исполнитель</div><div>{% if task.executor %}{{ task.executor.get_full_name|default:task.executor.username }}{% else %}—{% endif %}</div>
             <div class="font-medium">Статус</div><div>{{ task.status.name }}</div>
             <div class="font-medium">Дата создания</div><div>{{ task.created_at|date:"d.m.Y H:i" }}</div>
             <div class="font-medium">Метки:</div>

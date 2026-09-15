@@ -1,12 +1,20 @@
 import django_filters
 from django import forms
 from .models import Task
+from ..labels.models import Label
+
 
 class TaskFilter(django_filters.FilterSet):
     self_tasks = django_filters.BooleanFilter(
         method='filter_self',
         widget=forms.CheckboxInput,
         label='Только свои задачи',
+        required=False,
+    )
+    labels = django_filters.ModelChoiceFilter(
+        queryset=Label.objects.all(),
+        widget=forms.Select,
+        label='Метка',
         required=False,
     )
 
@@ -17,4 +25,4 @@ class TaskFilter(django_filters.FilterSet):
 
     class Meta:
         model = Task
-        fields = ['status', 'executor', 'labels']
+        fields = ['status', 'executor']
