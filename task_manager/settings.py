@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.1/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
+import sentry_sdk
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-1a+e2v2(=0n#y@nt%wprg+k_t!yccl5@3=ew#y#*=taqm3vd71')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'webserver',
@@ -36,6 +37,15 @@ ALLOWED_HOSTS = [
     'localhost',
     'testserver'
 ]
+
+sentry_sdk.init(
+    os.environ.get('SENTRY_DSN', ''),
+    send_default_pii=True,
+    max_request_body_size="always",
+    traces_sample_rate=0,
+    send_client_reports=False,
+    auto_session_tracking=False,
+)
 
 
 # Application definition
@@ -57,14 +67,6 @@ INSTALLED_APPS = [
     "django_tailwind_cli",
     'widget_tweaks',
     ]
-
-ROLLBAR = {
-    'access_token': os.environ.get('ROLLBAR_ACCESS_TOKEN', ''),
-    'environment': 'development' if DEBUG else 'production',
-    'code_version': '1.0',
-    'root': str(BASE_DIR),
-    }
-
 
 
 MIDDLEWARE = [
