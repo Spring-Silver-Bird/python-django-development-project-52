@@ -8,11 +8,8 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.urls import reverse_lazy
-from django.db.models import ProtectedError
-
 from task_manager.tasks.filters import TaskFilter
 from task_manager.tasks.models import Task
-
 
 
 class TaskListView(LoginRequiredMixin, ListView):
