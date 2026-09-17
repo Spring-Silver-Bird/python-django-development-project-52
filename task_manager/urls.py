@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.urls import include, path
+
 from task_manager import views
 from task_manager.views import page_not_found
-
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name="index"),

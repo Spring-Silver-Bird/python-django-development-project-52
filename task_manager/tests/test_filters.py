@@ -1,12 +1,12 @@
 # task_manager/tests/test_tasks.py
 
 from django.contrib.auth import get_user_model
-from django.contrib.messages import get_messages
 from django.test import TestCase
 from django.urls import reverse
+
+from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
-from task_manager.labels.models import Label
 
 User = get_user_model()
 

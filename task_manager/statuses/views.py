@@ -1,16 +1,19 @@
 # task_manager/statuses/views.py
 
-from django.views.generic import (
-    ListView, CreateView, UpdateView, DeleteView,
-)
-from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import ProtectedError
-from task_manager.statuses.models import Status
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    ListView,
+    UpdateView,
+)
 
+from task_manager.statuses.models import Status
 
 
 class StatusListView(LoginRequiredMixin, ListView):

@@ -1,11 +1,12 @@
 # task_manager/tasks/models.py
 
-from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 from django.conf import settings
-from task_manager.statuses.models import Status
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 from task_manager.labels.models import Label
+from task_manager.statuses.models import Status
 
 
 class Task(models.Model):
