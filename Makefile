@@ -16,5 +16,9 @@ render-start:
 tailwind-build:
 	uv run python manage.py tailwind build
 
+lint:
+	uv run ruff check .
+	uv run ruff format --check .
+
 tests:
-	uv run pytest
+	uv run pytest --cov --cov-report=term --cov-fail-under=80
