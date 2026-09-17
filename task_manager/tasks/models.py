@@ -20,6 +20,8 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         related_name="executed_tasks",
         verbose_name="Исполнитель",
+        blank=True,
+        null=True,
     )
     created_at = models.DateTimeField(
         verbose_name=_("дата создания"),
