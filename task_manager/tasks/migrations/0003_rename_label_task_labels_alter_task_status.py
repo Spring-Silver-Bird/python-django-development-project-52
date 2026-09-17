@@ -5,21 +5,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('statuses', '0001_initial'),
-        ('tasks', '0002_task_label'),
+        ("statuses", "0001_initial"),
+        ("tasks", "0002_task_label"),
     ]
 
     operations = [
         migrations.RenameField(
-            model_name='task',
-            old_name='label',
-            new_name='labels',
+            model_name="task",
+            old_name="label",
+            new_name="labels",
         ),
         migrations.AlterField(
-            model_name='task',
-            name='status',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='task_set', to='statuses.status'),
+            model_name="task",
+            name="status",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT, related_name="task_set", to="statuses.status"
+            ),
         ),
     ]

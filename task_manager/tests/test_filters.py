@@ -10,6 +10,7 @@ from task_manager.tasks.models import Task
 
 User = get_user_model()
 
+
 class FiltersTest(TestCase):
     def setUp(self):
         self.user1 = User.objects.create_user(username="tester1", password="pass1234")

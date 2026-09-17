@@ -4,9 +4,12 @@ from django.urls import reverse
 
 User = get_user_model()
 
+
 class UsersTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(first_name='Sam', last_name='Vimesy', username='Commander', password="SybilRamkin")
+        self.user = User.objects.create_user(
+            first_name="Sam", last_name="Vimesy", username="Commander", password="SybilRamkin"
+        )
 
     def test_users_list(self):
         response = self.client.get(reverse("users:list"))
@@ -14,18 +17,21 @@ class UsersTest(TestCase):
 
         self.assertIn("users", response.context)
 
-
     def test_create_get(self):
         response = self.client.get(reverse("users:create"))
         self.assertEqual(response.status_code, 200)
 
     def test_create_invalid(self):
-        response = self.client.post(reverse("users:create"), {
-            "username": "",
-            "first_name": "Fred", "last_name": "Colon",
-            "password1": "Sergeant!",
-            "password2": "Sergeant!",
-        })
+        response = self.client.post(
+            reverse("users:create"),
+            {
+                "username": "",
+                "first_name": "Fred",
+                "last_name": "Colon",
+                "password1": "Sergeant!",
+                "password2": "Sergeant!",
+            },
+        )
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertTrue(response.context["form"].errors)
@@ -45,7 +51,7 @@ class UsersTest(TestCase):
         response = self.client.post(
             reverse("users:update", kwargs={"pk": self.user.pk}),
             {"first_name": "Samuel", "last_name": "Vimes", "username": "Commander"},
-            follow=False
+            follow=False,
         )
         self.assertRedirects(response, reverse("users:list"))  # views.py:37
         self.user.refresh_from_db()
@@ -61,7 +67,7 @@ class UsersTest(TestCase):
         self.assertRedirects(response, reverse("users:list"))
         response = self.client.post(
             reverse("users:update", kwargs={"pk": self.user.pk}),
-            {"first_name": "Hack", "last_name": "Hack", "username": "Commander"}
+            {"first_name": "Hack", "last_name": "Hack", "username": "Commander"},
         )
         self.assertRedirects(response, reverse("users:list"))
         self.user.refresh_from_db()

@@ -10,6 +10,7 @@ from task_manager.tasks.models import Task
 
 User = get_user_model()
 
+
 class LabelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="tester", password="pass123")
@@ -18,7 +19,7 @@ class LabelTest(TestCase):
     def test_list_guest(self):
         response = self.client.get(reverse("labels:list"))
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse('login'), response.url)
+        self.assertIn(reverse("login"), response.url)
 
     def test_create_get_guest(self):
         response = self.client.get(reverse("labels:create"))
@@ -58,7 +59,6 @@ class LabelTest(TestCase):
 
         self.assertIn("labels", response.context)
 
-
     def test_create_get(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("labels:create"))
@@ -66,16 +66,18 @@ class LabelTest(TestCase):
 
     def test_create_invalid(self):
         self.client.force_login(self.user)
-        response = self.client.post(reverse("labels:create"), {
-            "name": "",
-        })
+        response = self.client.post(
+            reverse("labels:create"),
+            {
+                "name": "",
+            },
+        )
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertTrue(response.context["form"].errors)
         self.assertIn("name", response.context["form"].errors)
         self.assertEqual(Label.objects.count(), 1)
         self.assertFalse(Label.objects.filter(name="").exists())
-
 
     def test_update_get_own(self):
         self.client.force_login(self.user)
@@ -87,9 +89,7 @@ class LabelTest(TestCase):
     def test_update_post_own(self):
         self.client.force_login(self.user)
         response = self.client.post(
-            reverse("labels:update", kwargs={"pk": self.labels.pk}),
-            {"name": "black"},
-            follow=False
+            reverse("labels:update", kwargs={"pk": self.labels.pk}), {"name": "black"}, follow=False
         )
         self.assertRedirects(response, reverse("labels:list"))
         self.labels.refresh_from_db()
@@ -102,10 +102,7 @@ class LabelTest(TestCase):
         self.client.force_login(other)
         response = self.client.get(reverse("labels:update", kwargs={"pk": self.labels.pk}))
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(
-            reverse("labels:update", kwargs={"pk": self.labels.pk}),
-            {"name": "Hack"}
-        )
+        response = self.client.post(reverse("labels:update", kwargs={"pk": self.labels.pk}), {"name": "Hack"})
         self.assertRedirects(response, reverse("labels:list"))
         self.labels.refresh_from_db()
         self.assertEqual(self.labels.name, "Hack")
@@ -143,4 +140,3 @@ class LabelTest(TestCase):
         response = self.client.post(reverse("labels:delete", kwargs={"pk": self.labels.pk}))
         self.assertRedirects(response, reverse("labels:list"))
         self.assertFalse(Label.objects.filter(pk=self.labels.pk).exists())
-

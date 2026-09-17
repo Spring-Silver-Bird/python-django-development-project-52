@@ -11,29 +11,25 @@ from task_manager.tasks.models import Task
 
 User = get_user_model()
 
+
 class TaskTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="tester", password="pass123")
         self.status = Status.objects.create(name="TestStatus")
         self.labels = Label.objects.create(name="TestLabel")
         self.task = Task.objects.create(
-            name="Test_task",
-            description="some",
-            status=self.status,
-            author=self.user,
-            executor=self.user
+            name="Test_task", description="some", status=self.status, author=self.user, executor=self.user
         )
 
     def test_list_guest(self):
         response = self.client.get(reverse("tasks:list"))
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse('login'), response.url)
+        self.assertIn(reverse("login"), response.url)
 
     def test_detail_get_guest(self):
         response = self.client.get(reverse("tasks:detail", kwargs={"pk": self.task.pk}))
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse('login'), response.url)
-
+        self.assertIn(reverse("login"), response.url)
 
     def test_create_get_guest(self):
         response = self.client.get(reverse("tasks:create"))
@@ -41,7 +37,10 @@ class TaskTest(TestCase):
 
     def test_create_post_guest(self):
         count_before = Task.objects.count()
-        response = self.client.post(reverse("tasks:create"), {"name":"New_task", "description":"new_description", "status":self.status.pk, "executor":self.user.pk})
+        response = self.client.post(
+            reverse("tasks:create"),
+            {"name": "New_task", "description": "new_description", "status": self.status.pk, "executor": self.user.pk},
+        )
         self.assertEqual(response.status_code, 302)
         self.assertIn(reverse("login"), response.url)
         self.assertEqual(Task.objects.count(), count_before)
@@ -51,7 +50,10 @@ class TaskTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_update_post_guest(self):
-        response = self.client.post(reverse("tasks:update", kwargs={"pk": self.task.pk}), {"name": "Hack","status":self.status.pk, "executor":self.user.pk})
+        response = self.client.post(
+            reverse("tasks:update", kwargs={"pk": self.task.pk}),
+            {"name": "Hack", "status": self.status.pk, "executor": self.user.pk},
+        )
         self.assertEqual(response.status_code, 302)
         self.task.refresh_from_db()
         self.assertNotEqual(self.task.name, "Hack")
@@ -72,7 +74,6 @@ class TaskTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("tasks", response.context)
 
-
     def test_create_get(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("tasks:create"))
@@ -80,9 +81,12 @@ class TaskTest(TestCase):
 
     def test_create_invalid(self):
         self.client.force_login(self.user)
-        response = self.client.post(reverse("tasks:create"), {
-            "name": "",
-        })
+        response = self.client.post(
+            reverse("tasks:create"),
+            {
+                "name": "",
+            },
+        )
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertTrue(response.context["form"].errors)
@@ -93,12 +97,15 @@ class TaskTest(TestCase):
     def test_create_valid(self):
         self.client.force_login(self.user)
         count_before = Task.objects.count()
-        response = self.client.post(reverse("tasks:create"),
-            {"name": "Valid",
-            "description": "d",
-            "status": self.status.pk,
-            "executor": self.user.pk,
-            "labels": [self.labels.pk],},
+        response = self.client.post(
+            reverse("tasks:create"),
+            {
+                "name": "Valid",
+                "description": "d",
+                "status": self.status.pk,
+                "executor": self.user.pk,
+                "labels": [self.labels.pk],
+            },
             follow=False,
         )
         self.assertRedirects(response, reverse("tasks:list"))
@@ -113,7 +120,6 @@ class TaskTest(TestCase):
         msgs = [str(m) for m in get_messages(response.wsgi_request)]
         self.assertIn("Задача успешно создана", msgs)
 
-
     def test_update_get_own(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("tasks:update", kwargs={"pk": self.task.pk}))
@@ -125,8 +131,8 @@ class TaskTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.post(
             reverse("tasks:update", kwargs={"pk": self.task.pk}),
-            {"name": "other task", "description":"new", "status":self.status.pk,  "executor":self.user.pk},
-            follow=False
+            {"name": "other task", "description": "new", "status": self.status.pk, "executor": self.user.pk},
+            follow=False,
         )
         self.assertRedirects(response, reverse("tasks:list"))
         self.task.refresh_from_db()
@@ -141,7 +147,7 @@ class TaskTest(TestCase):
         self.assertEqual(response.status_code, 200)
         response = self.client.post(
             reverse("tasks:update", kwargs={"pk": self.task.pk}),
-            {"name": "Hack", "description":"some", "status":self.status.pk, "executor":self.user.pk}
+            {"name": "Hack", "description": "some", "status": self.status.pk, "executor": self.user.pk},
         )
         self.assertRedirects(response, reverse("tasks:list"))
         self.task.refresh_from_db()

@@ -21,10 +21,10 @@ jobs:
         run: curl -LsSf https://astral.sh/uv/install.sh | sh
 
       - name: Install deps
-        run: make install  # где: Makefile:2 uv sync --dev (подтянет ruff+pytest-cov из pyproject)
+        run: make setup
 
       - name: Lint (ruff)
-        run: make lint  # где: Makefile:19-21 ruff check + format --check
+        run: make lint
 
       - name: Tests with coverage
         run: make tests

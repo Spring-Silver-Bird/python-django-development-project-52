@@ -4,18 +4,20 @@ from django.contrib.auth.forms import UserCreationForm
 
 User = get_user_model()
 
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['first_name','last_name','username']
+        fields = ["first_name", "last_name", "username"]
         labels = {
-            'first_name': 'Имя',
-            'last_name': 'Фамилия',
-            'username': 'Имя пользователя',
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+            "username": "Имя пользователя",
         }
+
 
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name','last_name','username']
-        labels = {'first_name': 'Имя','last_name': 'Фамилия','username': 'Имя пользователя'}
+        fields = ["first_name", "last_name", "username"]
+        labels = {"first_name": "Имя", "last_name": "Фамилия", "username": "Имя пользователя"}

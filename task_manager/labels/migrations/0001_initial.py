@@ -4,23 +4,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Label',
+            name="Label",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=150, unique=True, verbose_name='Имя')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='дата создания')),
+                ("id", models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("name", models.CharField(max_length=150, unique=True, verbose_name="Имя")),
+                ("created_at", models.DateTimeField(auto_now_add=True, verbose_name="дата создания")),
             ],
             options={
-                'verbose_name': 'Метка',
-                'verbose_name_plural': 'Метки',
+                "verbose_name": "Метка",
+                "verbose_name_plural": "Метки",
             },
         ),
     ]

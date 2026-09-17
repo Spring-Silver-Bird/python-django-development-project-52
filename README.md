@@ -1,6 +1,6 @@
 ## Task manager (Python)
 [![Actions Status](https://github.com/Spring-Silver-Bird/python-django-development-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Spring-Silver-Bird/python-django-development-project-52/actions)
-
+[![my-check](https://github.com/Spring-Silver-Bird/python-django-development-project-52/actions/workflows/my_check.yml/badge.svg)](https://github.com/Spring-Silver-Bird/python-django-development-project-52/actions/workflows/my_check.yml)
 ---
 
 ## Deploy is available [here](https://task-manager-is4e.onrender.com)

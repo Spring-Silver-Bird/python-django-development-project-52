@@ -9,6 +9,7 @@ from task_manager.tasks.models import Task
 
 User = get_user_model()
 
+
 class StatusTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="tester", password="pass123")
@@ -17,7 +18,7 @@ class StatusTest(TestCase):
     def test_list_guest(self):
         response = self.client.get(reverse("statuses:list"))
         self.assertEqual(response.status_code, 302)
-        self.assertIn(reverse('login'), response.url)
+        self.assertIn(reverse("login"), response.url)
 
     def test_create_get_guest(self):
         response = self.client.get(reverse("statuses:create"))
@@ -57,7 +58,6 @@ class StatusTest(TestCase):
 
         self.assertIn("statuses", response.context)
 
-
     def test_create_get(self):
         self.client.force_login(self.user)
         response = self.client.get(reverse("statuses:create"))
@@ -65,16 +65,18 @@ class StatusTest(TestCase):
 
     def test_create_invalid(self):
         self.client.force_login(self.user)
-        response = self.client.post(reverse("statuses:create"), {
-            "name": "",
-        })
+        response = self.client.post(
+            reverse("statuses:create"),
+            {
+                "name": "",
+            },
+        )
         self.assertEqual(response.status_code, 200)
         self.assertIn("form", response.context)
         self.assertTrue(response.context["form"].errors)
         self.assertIn("name", response.context["form"].errors)
         self.assertEqual(Status.objects.count(), 1)
         self.assertFalse(Status.objects.filter(name="").exists())
-
 
     def test_update_get_own(self):
         self.client.force_login(self.user)
@@ -86,9 +88,7 @@ class StatusTest(TestCase):
     def test_update_post_own(self):
         self.client.force_login(self.user)
         response = self.client.post(
-            reverse("statuses:update", kwargs={"pk": self.status.pk}),
-            {"name": "in progress"},
-            follow=False
+            reverse("statuses:update", kwargs={"pk": self.status.pk}), {"name": "in progress"}, follow=False
         )
         self.assertRedirects(response, reverse("statuses:list"))
         self.status.refresh_from_db()
@@ -101,10 +101,7 @@ class StatusTest(TestCase):
         self.client.force_login(other)
         response = self.client.get(reverse("statuses:update", kwargs={"pk": self.status.pk}))
         self.assertEqual(response.status_code, 200)
-        response = self.client.post(
-            reverse("statuses:update", kwargs={"pk": self.status.pk}),
-            {"name": "Hack"}
-        )
+        response = self.client.post(reverse("statuses:update", kwargs={"pk": self.status.pk}), {"name": "Hack"})
         self.assertRedirects(response, reverse("statuses:list"))
         self.status.refresh_from_db()
         self.assertEqual(self.status.name, "Hack")
@@ -126,7 +123,7 @@ class StatusTest(TestCase):
 
     def test_delete_protected(self):
         self.client.force_login(self.user)
-        task = Task.objects.create(name="T1", description="d", status=self.status, author=self.user, executor=self.user)
+        Task.objects.create(name="T1", description="d", status=self.status, author=self.user, executor=self.user)
         response = self.client.post(reverse("statuses:delete", kwargs={"pk": self.status.pk}))
         self.assertRedirects(response, reverse("statuses:list"))
         self.assertTrue(Status.objects.filter(pk=self.status.pk).exists())
@@ -141,4 +138,3 @@ class StatusTest(TestCase):
         response = self.client.post(reverse("statuses:delete", kwargs={"pk": self.status.pk}))
         self.assertRedirects(response, reverse("statuses:list"))
         self.assertFalse(Status.objects.filter(pk=self.status.pk).exists())
-

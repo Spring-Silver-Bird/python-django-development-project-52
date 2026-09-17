@@ -1,4 +1,4 @@
-install:
+setup:
 	uv sync --dev
 
 migrate:
