@@ -46,7 +46,7 @@ git clone https://github.com/Spring-Silver-Bird/python-django-development-projec
 cd python-project-52
 curl -LsSf https://astral.sh/uv/install.sh | sh
 source $HOME/.local/bin/env
-make install
+make setup
 npm install
 cp .env.example .env 2>/dev/null || echo "SECRET_KEY=$(uv run python -c 'from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())')\nDEBUG=True\nDATABASE_URL=sqlite:///db.sqlite3" > .env
 uv run python manage.py tailwind build
