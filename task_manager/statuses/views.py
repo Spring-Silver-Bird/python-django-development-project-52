@@ -17,6 +17,9 @@ class StatusListView(LoginRequiredMixin, ListView):
     model = Status
     template_name = 'statuses/list.html'
     context_object_name = 'statuses'
+    def handle_no_permission(self):
+        messages.error(self.request, 'Кто ты, воин? Назови свое имя и станут видны тебе знаки отличия!')
+        return super().handle_no_permission()
 
 class StatusCreateView(LoginRequiredMixin, CreateView):
     model = Status

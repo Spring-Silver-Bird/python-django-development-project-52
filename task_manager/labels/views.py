@@ -17,6 +17,9 @@ class LabelListView(LoginRequiredMixin, ListView):
     model = Label
     template_name = 'labels/list.html'
     context_object_name = 'labels'
+    def handle_no_permission(self):
+        messages.error(self.request, 'Кто ты, воин? Назови свое имя и откроются тебе тайные знаки!')
+        return super().handle_no_permission()
 
 class LabelCreateView(LoginRequiredMixin, CreateView):
     model = Label

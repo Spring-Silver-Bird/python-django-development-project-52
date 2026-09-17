@@ -17,6 +17,10 @@ class TaskListView(LoginRequiredMixin, ListView):
     template_name = 'tasks/list.html'
     context_object_name = 'tasks'
 
+    def handle_no_permission(self):
+        messages.error(self.request, 'Кто ты, воин? Назови свое имя и узришь множество тайн!')
+        return super().handle_no_permission()
+
     def get_queryset(self):
         return TaskFilter(self.request.GET, queryset=Task.objects.all(), request=self.request).qs.distinct()
 

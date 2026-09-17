@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import include, path
 from task_manager import views
+from task_manager.views import page_not_found
 
 
 urlpatterns = [
@@ -13,3 +14,5 @@ urlpatterns = [
     path('logout/', views.UserLogoutView.as_view(), name='logout'),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = page_not_found
