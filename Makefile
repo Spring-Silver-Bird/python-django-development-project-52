@@ -1,4 +1,8 @@
-setup:
+.PHONY: setup install migrate collectstatic build render-start tailwind-build tests
+
+setup: install
+
+install:
 	uv sync --dev
 
 migrate:
