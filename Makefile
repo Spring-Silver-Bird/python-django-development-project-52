@@ -2,6 +2,7 @@
 
 setup:
 	make install
+	uv run python manage.py migrate
 
 install:
 	uv sync --dev
