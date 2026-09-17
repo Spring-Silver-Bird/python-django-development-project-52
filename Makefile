@@ -9,7 +9,7 @@ install:
 migrate:
 	uv run python manage.py migrate
 
-collectstatic:
+collectstatic: tailwind-build
 	uv run python manage.py collectstatic --noinput
 
 build:
