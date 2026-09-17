@@ -27,6 +27,17 @@
             <label for="id_username" class="block text-sm font-medium mb-1">Имя пользователя:</label>
             {{ form.username }}
         </div>
+
+        <div class="mb-3">
+            <label for="id_password1" class="block text-sm font-medium mb-1">Пароль:</label>
+            {{ form.password1 }}
+        </div>
+
+        <div class="mb-3">
+            <label for="id_password2" class="block text-sm font-medium mb-1">Подтверждение пароля:</label>
+            {{ form.password2 }}
+        </div>
+        
         <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md shadow">Изменить</button>
         <a href="{% url 'users:list' %}" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-md border inline-block text-center ml-2">Отмена</a>
     </form>
