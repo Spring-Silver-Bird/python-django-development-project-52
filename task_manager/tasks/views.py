@@ -14,6 +14,7 @@ from django.views.generic import (
 )
 
 from task_manager.tasks.filters import TaskFilter
+from task_manager.tasks.forms import TaskForm
 from task_manager.tasks.models import Task
 
 
@@ -37,7 +38,7 @@ class TaskListView(LoginRequiredMixin, ListView):
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     model = Task
-    fields = ["name", "description", "status", "executor", "labels"]
+    form_class = TaskForm
     template_name = "tasks/create.html"
     success_url = reverse_lazy("tasks:list")
 
@@ -49,7 +50,7 @@ class TaskCreateView(LoginRequiredMixin, CreateView):
 
 class TaskUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Task
-    fields = ["name", "description", "status", "executor", "labels"]
+    form_class = TaskForm
     template_name = "tasks/update.html"
     success_url = reverse_lazy("tasks:list")
     success_message = "Задача успешно изменена"

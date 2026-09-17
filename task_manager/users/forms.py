@@ -8,7 +8,7 @@ User = get_user_model()
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "username"]
+        fields = ["first_name", "last_name", "username",]
         labels = {
             "first_name": "Имя",
             "last_name": "Фамилия",
@@ -16,16 +16,14 @@ class RegisterForm(UserCreationForm):
         }
 
 
-class UpdateForm(forms.ModelForm):
+class UpdateForm(UserCreationForm):
     class Meta:
         model = User
-        fields = [
-            "first_name",
-            "last_name",
-            "username",
-        ]
+        fields = ["first_name", "last_name", "username"]
         labels = {
             "first_name": "Имя",
             "last_name": "Фамилия",
             "username": "Имя пользователя",
+            "password1": "Пароль",
+            "password2": "Подтверждение пароля",
         }

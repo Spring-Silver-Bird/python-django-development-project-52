@@ -50,13 +50,20 @@ class UsersTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.post(
             reverse("users:update", kwargs={"pk": self.user.pk}),
-            {"first_name": "Samuel", "last_name": "Vimes", "username": "Commander"},
+            {
+                "first_name": "Samuel",
+                "last_name": "Vimes",
+                "username": "Commander",
+                "password1": "SybilRamkin1",
+                "password2": "SybilRamkin1",
+            },
             follow=False,
         )
         self.assertRedirects(response, reverse("users:list"))  # views.py:37
         self.user.refresh_from_db()
         self.assertEqual(self.user.first_name, "Samuel")
         self.assertEqual(self.user.last_name, "Vimes")
+        self.assertTrue(self.user.check_password("SybilRamkin1"))
         list_resp = self.client.get(reverse("users:list"))
         self.assertContains(list_resp, "Samuel")
 
