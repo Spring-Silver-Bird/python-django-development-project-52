@@ -17,14 +17,15 @@
             <div class="font-medium">Статус</div><div>{{ task.status.name }}</div>
             <div class="font-medium">Дата создания</div><div>{{ task.created_at|date:"d.m.Y H:i" }}</div>
             <div class="font-medium">Метки:</div>
-            <div>{% if task.labels.all %}
+
+        </div>
+        <div>{% if task.labels.all %}
                 <ul class="list-disc ml-5">
                     {% for l in task.labels.all %}
                         <li>{{ l.name }}</li>
                     {% endfor %}
                 </ul>
             {% else %}—{% endif %}
-            </div>
         </div>
         <div class="mt-4 space-x-3 text-sm">
             <a href="{% url 'tasks:update' task.pk %}" class="text-blue-600 hover:underline">Изменить</a>
@@ -36,6 +37,6 @@
 
 {% block picture %}
     <div class="hero-image flex justify-end mt-auto pt-12">
-        <img src="{% static 'images/task_detail.png' %}" alt="Стикер" width="300" class="w-60 h-auto">
+        <img src="{% static 'images/task_detail.png' %}" alt="Стикер" width="400" class="w-96 h-auto">
     </div>
 {% endblock %}
