@@ -6,16 +6,22 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tasks', '0003_rename_label_task_labels_alter_task_status'),
+        ("tasks", "0003_rename_label_task_labels_alter_task_status"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='task',
-            name='executor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='executed_tasks', to=settings.AUTH_USER_MODEL, verbose_name='Исполнитель'),
+            model_name="task",
+            name="executor",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                related_name="executed_tasks",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Исполнитель",
+            ),
         ),
     ]
