@@ -17,12 +17,7 @@
 
             {% endif %} {% for field in form %}
             <div class="mb-4">
-              <label
-                for="{{ field.id_for_label }}"
-                class="block text-sm font-medium mb-1"
-              >
-                {{ field.label }}
-              </label>
+              <label for="{{ field.id_for_label }}" class="block text-sm font-medium mb-1">{{ field.label }}</label>
               {{ field }} {% if field.errors %}
               <p class="text-sm text-red-600 mt-1">{{ field.errors|striptags }}</p>
               {% endif %} {% if field.help_text %}
