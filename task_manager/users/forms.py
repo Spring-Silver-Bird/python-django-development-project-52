@@ -19,5 +19,9 @@ class RegisterForm(UserCreationForm):
 class UpdateForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "username"]
-        labels = {"first_name": "Имя", "last_name": "Фамилия", "username": "Имя пользователя"}
+        fields = ["first_name", "last_name", "username",]
+        labels = {
+            "first_name": "Имя",
+            "last_name": "Фамилия",
+            "username": "Имя пользователя",
+        }
