@@ -46,12 +46,12 @@ class UserDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixi
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         if self.object.authored_tasks.exists() or self.object.executed_tasks.exists():
-            messages.error(request, 'Невозможно удалить пользователя, так как у него остались задачи')
+            messages.error(request, 'Вы не можете покинуть нас, так как еще остались задачи')
             return redirect('users:list')
         try:
             return super().post(request, *args, **kwargs)
         except ProtectedError:
-            messages.error(request, 'Невозможно удалить пользователя, так как у него остались задачи')
+            messages.error(request, 'Вы не можете покинуть нас, так как еще остались задачи')
             return redirect('users:list')
 
     success_url = reverse_lazy('users:list')
